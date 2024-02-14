@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Poppins&display=swap');
+
+        body {
+            font-family: 'Noto Sans KR', 'Poppins', sans-serif;
+        }
+
+        .large-font {
+            color: rgba(14, 14, 174, 0.833);
+            font-size: 2em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .small-font {
+            color: rgba(14, 14, 174, 0.833);
+            font-size: 0.75em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .portraits-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            height: 35vh;
+        }
+
+        .portrait {
+            width: 150px;
+            height: 150px;
+            margin: 3px;
+            border: 15px solid #ffffff;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .portrait img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 100%;
+        }
+
+        .portrait-text {
+            position: absolute;
+            bottom: 210px;
+        }
+
+        .portrait-name {
+            position: absolute;
+            bottom: 190px;
+        }
+
+        .poppins-regular {
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .noto-sans-kr {
+            font-family: "Noto Sans KR", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+
+        .gr_box {
+            background-image: linear-gradient(to bottom, rgb(234, 234, 234), rgb(255, 255, 255));
+            background-size: cover; /* 이미지를 커버하도록 설정 */
+            background-position: center;
+            height: 500px;
+            z-index: 10;
+        }
+    </style>
+    <title>Your Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Poppins&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="large-font">
+        <p>드림어스는 음악을 매개로 창작자, 사용자 모두<BR>
+            다양한 꿈을 꿀 수 있는 다채로운 세상을 만듭니다.</p>
+    </div>
+
+    <div class="small-font">
+        <p class="noto-sans-kr">창작자들이 꿈꾸는 열린문화, 사용자들이 꿈꾸는 다채로운 경험을<br>
+            취향의 차이를 존중하는 문화를 만들어갑니다.</p>
+    </div>
+
+    <div class="portraits-container">
+        
+        {% for mem in data %}    
+            <div class="portrait">
+                <img src="//i.namu.wiki/i/x5h2GQlzf5RsGnlN1O9wl4DI0gnEv5f-bL7ZdZjTnSAKlbNAaZzdW6qjvwQSYA5BzccVqZLWPMc_jERWJ9qsev2d2h-Ko_6ntGRh0oCnyZUZEaZWUR1Wf-vTxLY8Bp0iTZLNJzEdJ5NcHfT7EkZWEg.webp"
+                    alt="Portrait 1">
+                <div class="portrait-text">
+                    <h6>{{mem.mbti}}</h6>
+                </div>
+                <div class="portrait-name">
+                    <h6>{{mem.username}}</h6>
+                </div>
+            </div>
+        {% endfor %}
+            
+    </div>
+    <div class="gr_box">
+        <p>필요한 내용 기재</p>
+    </div>
+
+</body>
+
+</html>
