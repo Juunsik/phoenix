@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 
 app = Flask(__name__)
 
@@ -34,13 +34,13 @@ with app.app_context():
 @app.route("/")
 def members():
     member_list = Member.query.all()
-    return render_template("index.html", data=member_list)
+    return render_template("phoenix.html", data=member_list)
 
 
 @app.route("/members/<username>/", methods=["GET"])
 def render_member_filter(username):
     get_list = Member.query.filter_by(username=username).first()
-    return render_template("index.html", data=get_list)
+    return render_template("phoenix.html", data=get_list)
 
 
 @app.route("/members/create/", methods=["POST", "GET"])
@@ -75,30 +75,29 @@ def member_create():
     return redirect(url_for("members"))
 
 
-# @app.route("/members/<username>/update/", methods=["POST", "GET"])
-# def member_update(username):
-#     object = Member.query.filter_by(username=username).first()
+#details
+@app.route("/members/<username>/details", methods=["GET"])
+def member_details(username):
+    member = Member.query.filter_by(username=username).first_or_404()
+    return jsonify({
+        "username": member.username,
+        "image_url": member.image_url,
+        "mbti": member.mbti,
+        "collabo_style": member.collabo_style,
+        "advantage": member.advantage,
+        "blog_url": member.blog_url
+    })
 
-#     if request.method == "POST":
-#         object.username = request.form["username"]
-#         object.image_url = request.form["image_url"]
-#         object.mbti = request.form["mbti"]
-#         object.collabo_style = request.form["collabo_style"]
-#         object.advantage = request.form["advantage"]
-#         object.blog_url = request.form["blog_url"]
-#         db.session.commit()
-
-#     return redirect(url_for("members"))
-
-
-@app.route("/members/<username>/delete", methods=["POST", "GET"])
+#delete
+@app.route("/members/<username>/delete", methods=["POST"])
 def member_delete(username):
     member = Member.query.filter_by(username=username).first()
-
-    db.session.delete(member)
-    db.session.commit()
-
-    return redirect(url_for("members"))
+    if member:
+        db.session.delete(member)
+        db.session.commit()
+        return jsonify({"success": "Member deleted successfully"}), 200
+    else:
+        return jsonify({"error": "Member not found"}), 404
 
 
 if __name__ == "__main__":
